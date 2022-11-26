@@ -14,11 +14,15 @@ Change or put in .env file the **DATABASE_URL** and the name and the password
 
 > DATABASE_URL="postgresql://name:password@localhost:5432/dbname?schema=public"
 
+And adding in the .env too
+
+> SERVER_PORT=3030
+
 Use the command:
-```npx prisma db push```
+`npx prisma db push`
 
 If the prisma schema is not push in the database use this command :
-```npx prisma migrate dev```
+`npx prisma migrate dev`
 
 ### Prisma Commande !!
 
@@ -38,22 +42,22 @@ Flags
 Examples
 
 Set up a new Prisma project :
-```prisma init```
+`prisma init`
 
 Generate artifacts (e.g. Prisma Client) :
-```prisma generate```
+`prisma generate`
 
 Browse your data :
-```prisma studio```
+`prisma studio`
 
 Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client) :
-```prisma migrate dev```
+`prisma migrate dev`
 
 Pull the schema from an existing database, updating the Prisma schema :
-```prisma db pull```
+`prisma db pull`
 
 Push the Prisma schema state to the database :
-```prisma db push```
+`prisma db push`
 
 ## Building / Testing
 

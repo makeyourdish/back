@@ -45,11 +45,12 @@ model Recipes {
 }
 
 model Ingredients {
-  id                     Int                 @id @default(autoincrement())
-  imageUrl               String?
-  categoryIngredients    CategoryIngredients @relation(fields: [caategoryIngredientsId], references: [id])
-  caategoryIngredientsId Int
-  recipes                Contain[]
+  id                    Int                 @id @default(autoincrement())
+  name                  String
+  imageUrl              String?
+  categoryIngredients   CategoryIngredients @relation(fields: [categoryIngredientsId], references: [id])
+  categoryIngredientsId Int
+  recipes               Contain[]
 }
 
 model RecipeType {
