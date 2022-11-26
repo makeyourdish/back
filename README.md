@@ -13,10 +13,10 @@ Change or put in .env file the DATABASE_URL and the name and the password
 DATABASE_URL="postgresql://name:password@localhost:5432/dbname?schema=public"
 
 Use the command:
-$ prisma db push
+            npx prisma db push
 
 If the prisma schema is not push in the database use this command:
-$ prisma migrate dev
+            npx prisma migrate dev
 
 ### Prisma Commande !!
 
