@@ -8,15 +8,17 @@ MakeYourDish propose des recettes de plats et de cocktails en fonction des ingrÃ
 
 Use sql query to create a new database called makeyourdish
 
-Change or put in .env file the DATABASE_URL and the name and the password
+> Exemple : create database makeyourdish
 
-DATABASE_URL="postgresql://name:password@localhost:5432/dbname?schema=public"
+Change or put in .env file the **DATABASE_URL** and the name and the password
+
+> DATABASE_URL="postgresql://name:password@localhost:5432/dbname?schema=public"
 
 Use the command:
-            npx prisma db push
+```npx prisma db push```
 
-If the prisma schema is not push in the database use this command:
-            npx prisma migrate dev
+If the prisma schema is not push in the database use this command :
+```npx prisma migrate dev```
 
 ### Prisma Commande !!
 
@@ -35,23 +37,23 @@ Flags
 
 Examples
 
-Set up a new Prisma project
-$ prisma init
+Set up a new Prisma project :
+```prisma init```
 
-Generate artifacts (e.g. Prisma Client)
-$ prisma generate
+Generate artifacts (e.g. Prisma Client) :
+```prisma generate```
 
-Browse your data
-$ prisma studio
+Browse your data :
+```prisma studio```
 
-Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)
-$ prisma migrate dev
+Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client) :
+```prisma migrate dev```
 
-Pull the schema from an existing database, updating the Prisma schema
-$ prisma db pull
+Pull the schema from an existing database, updating the Prisma schema :
+```prisma db pull```
 
-Push the Prisma schema state to the database
-$ prisma db push
+Push the Prisma schema state to the database :
+```prisma db push```
 
 ## Building / Testing
 
