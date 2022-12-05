@@ -17,6 +17,12 @@ export const userSignIn = async (req, res) => {
       },
     })
 
+    if (!user) {
+      res.status(403).send("L'email ou le mot de passe est invalide")
+
+      return
+    }
+
     // eslint-disable-next-line no-unused-vars
     const [passwordHash, passwordSalt] = hashPassword(
       password,
@@ -24,7 +30,7 @@ export const userSignIn = async (req, res) => {
     )
 
     if (passwordHash !== user.passwordHash) {
-      res.status(403).send("Email or Password is invalid")
+      res.status(403).send("L'email ou le mot de passe est invalide")
 
       return
     }
@@ -61,6 +67,18 @@ export const userSignUp = async (req, res) => {
   try {
     const [passwordHash, passwordSalt] = hashPassword(password)
 
+    const user = await prisma.users.findFirst({
+      where: {
+        email: email,
+      },
+    })
+
+    if (user) {
+      res.status(403).send("L'email est déjà utilisé")
+
+      return
+    }
+
     await prisma.users.create({
       data: {
         userName: userName,
@@ -70,13 +88,7 @@ export const userSignUp = async (req, res) => {
       },
     })
 
-    const user = await prisma.users.findFirst({
-      where: {
-        email: email,
-      },
-    })
-
-    res.send(user)
+    res.status(200).send("L'utilisateur a bien été créé")
   } catch (error) {
     res.status(400).send("Problème survenue : " + error)
   }
