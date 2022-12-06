@@ -6,16 +6,23 @@ const prisma = new PrismaClient()
 
 const auth = async (req, res, next) => {
   const {
-    headers: { authorization },
+    headers: { token: jwt },
   } = req
-  const token = jsonwebtoken.decode(authorization)
+
+  if (!jwt) {
+    res.status(403).send("Unauthorized")
+
+    return
+  }
+
+  const token = jsonwebtoken.decode(jwt)
 
   try {
     const user = await prisma.users.findUnique({
       where: { id: token.payload.userId },
     })
     res.userAdmin = token.userAdmin
-    jsonwebtoken.verify(authorization, user.passwordSalt)
+    jsonwebtoken.verify(jwt, user.passwordSalt)
     next()
   } catch (err) {
     console.log("token invalid !")

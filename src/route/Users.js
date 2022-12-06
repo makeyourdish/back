@@ -123,3 +123,30 @@ export const userSession = async (req, res) => {
     res.status(403).send("token invalid !")
   }
 }
+
+export const userAccount = async (req, res) => {
+  const {
+    params: { userId },
+  } = req
+
+  try {
+    const user = await prisma.users.findUnique({
+      where: { id: parseInt(userId) },
+    })
+
+    if (!user) {
+      res.status(404).send("L'utilisateur n'existe pas")
+
+      return
+    }
+
+    res.status(200).send({
+      userId: user.id,
+      userAdmin: user.isAdmin,
+      userEmail: user.email,
+      userName: user.userName,
+    })
+  } catch (err) {
+    res.status(400).send("Problème survenue : " + err)
+  }
+}

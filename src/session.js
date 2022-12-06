@@ -1,6 +1,11 @@
 import auth from "./middleware/auth.js"
 import { ExempleGetIngredients } from "./route/exemple.js"
-import { userSession, userSignIn, userSignUp } from "./route/Users.js"
+import {
+  userSession,
+  userSignIn,
+  userSignUp,
+  userAccount,
+} from "./route/Users.js"
 
 const sessionRoutes = ({ app }) => {
   //ALL definition route are here
@@ -16,6 +21,9 @@ const sessionRoutes = ({ app }) => {
   })
   app.get("/session", async (req, res) => {
     await userSession(req, res)
+  })
+  app.get("/accounts/:userId", auth, async (req, res) => {
+    await userAccount(req, res)
   })
 }
 
