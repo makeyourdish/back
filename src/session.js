@@ -1,8 +1,8 @@
 import auth from "./middleware/auth.js";
 import { CreateCategoryIngredient, DeleteCategoryIngredient, GetCategoryIngredients, UpdateCategoryIngredient } from "./route/CategoryIngredient.js";
 import { ExempleGetIngredients } from "./route/exemple.js";
-import { CreateIngredients, DeleteIngredient, GetIngredients, UpdateIngredient } from "./route/Ingredients.js";
-import { CreateRecipes, DeleteRecipe, GetRecipes, UpdateRecipes } from "./route/Recipes.js";
+import { CreateIngredients, DeleteIngredient, GetIngredient, GetIngredients, UpdateIngredient } from "./route/Ingredients.js";
+import { CreateRecipes, DeleteRecipe, GetRecipe, GetRecipes, UpdateRecipes } from "./route/Recipes.js";
 import { CreateRecipeType, DeleteRecipeType, GetRecipeType, UpdateRecipeType } from "./route/RecipeType.js";
 import { userSession, userSignIn, userSignUp } from "./route/Users.js";
 
@@ -10,7 +10,7 @@ import { userSession, userSignIn, userSignUp } from "./route/Users.js";
 const sessionRoutes = ({ app }) => {
 //ALL definition route are here
 //exemple route
-app.get("/exemple/ingredients", auth, async (req, res) => {
+app.get("/exemple/ingredients", async (req, res) => {
     await ExempleGetIngredients(req, res);
   });
   //User
@@ -27,6 +27,9 @@ app.get("/exemple/ingredients", auth, async (req, res) => {
   app.get('/allRecipes', async (req,res) => {
     await GetRecipes(req,res);
   })
+  app.get('/recipe/:idRecipe', async (req,res) => {
+    await GetRecipe(req,res);
+  })
   app.post('/recipe', async (req,res) => {
     await CreateRecipes(req,res);
   })
@@ -39,6 +42,9 @@ app.get("/exemple/ingredients", auth, async (req, res) => {
   //ingredient
   app.get('/allIngredient', async (req,res) => {
     await GetIngredients(req,res);
+  })
+  app.get('/ingredient/:idIngredient', async (req,res) => {
+    await GetIngredient(req,res);
   })
   app.post('/ingredient', async (req,res) => {
     await CreateIngredients(req,res);

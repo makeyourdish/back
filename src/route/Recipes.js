@@ -13,12 +13,23 @@ export const GetRecipes = async (req, res) => {
   }
 };
 
+export const GetRecipe = async(req,res) => {
+  const {idRecipe} = req.params;
+  try {
+    const recipe = await prisma.recipes.findUnique({where: {id: Number(idRecipe)}, include:{ingredients:{include: { ingredient: true}}}});
+    console.log(recipe)
+    res.status(200).send({recipes: recipe})
+  } catch (error) {
+    res.status(400).send("Problème survenue : " + error);
+  }
+}
+
 export const CreateRecipes = async (req, res) => {
     const {
-        body: { name, personNb, description, imageUrl, preparationTime, step, priceRange, difficulty, published, recipeTypeId },
+        body: { name, personNb, description, imageUrl, preparationTime, step, priceRange, difficulty, published, recipeTypeId, ingredients },
       } = req;
     try {
-      const recipes = await prisma.recipes.create({
+      const recipe = await prisma.recipes.create({
         data: {
             name: name,
             personNb:personNb,
@@ -32,6 +43,22 @@ export const CreateRecipes = async (req, res) => {
             recipeTypeId:recipeTypeId
         },
       });
+      ingredients.map(async ({id, quantity, quantityType})=>
+        await prisma.contain.create({
+          data:{
+            ingredientId: id,
+            quantity: quantity,
+            quantityType: quantityType,
+            recipeId: recipe.id
+          }
+        })
+      )
+      const recipes = await prisma.recipes.findUnique({
+        where:{
+          id: recipe.id
+        },
+        include:{ingredients:{include: { ingredient: true}}}
+      })
       console.log(recipes)
       res.status(200).send({recipes: recipes})
     } catch (error) {

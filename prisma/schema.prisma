@@ -32,7 +32,7 @@ model Recipes {
   preparationTime String
   step            String
   priceRange      Int
-  difficulty      String
+  difficulty      Int
   published       Boolean        @default(false)
   // author          Users          @relation(fields: [authorId], references: [id])
   // authorId        Int
@@ -75,6 +75,8 @@ model AddFavorites {
 
 model Contain {
   id           Int         @id @default(autoincrement())
+  quantity     Float
+  quantityType String?
   recipeId     Int
   recipe       Recipes     @relation(fields: [recipeId], references: [id])
   ingredientId Int

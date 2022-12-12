@@ -13,6 +13,17 @@ export const GetIngredients = async (req, res) => {
   }
 };
 
+export const GetIngredient = async (req, res) => {
+  const {idIngredient} = req.params;
+  try {
+    const ingredients = await prisma.ingredients.findUnique({where: {id: idIngredient}});
+    console.log(ingredients)
+    res.status(200).send({ingredients: ingredients})
+  } catch (error) {
+    res.status(400).send("Problème survenue : " + error);
+  }
+};
+
 export const CreateIngredients = async (req, res) => {
     const {
         body: { name, imageUrl,  categoryIngredientsId },
