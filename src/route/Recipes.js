@@ -33,7 +33,7 @@ export const CreateRecipes = async (req, res) => {
         data: {
             name: name,
             personNb:personNb,
-            Description: description,
+            description: description,
             imageUrl: imageUrl,
             preparationTime: preparationTime,
             step: step,
@@ -76,7 +76,7 @@ export const CreateRecipes = async (req, res) => {
         data: {
             name: name,
             personNb:personNb,
-            Description: description,
+            description: description,
             imageUrl: imageUrl,
             preparationTime: preparationTime,
             step: step,
