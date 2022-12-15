@@ -50,16 +50,16 @@ const sessionRoutes = ({ app }) => {
   app.post("/sign-up", async (req, res) => {
     await userSignUp(req, res)
   })
-  app.get("/userGetAll", async (req, res) => {
+  app.get("/userGetAll", authMaster, async (req, res) => {
     await userGetAll(req, res)
   })
-  app.get("/userGetOne/:idUser", async (req, res) => {
+  app.get("/userGetOne/:idUser", auth, async (req, res) => {
     await userGetOne(req, res)
   })
-  app.put("/userUpdate/:idUser", async (req, res) => {
+  app.put("/userUpdate/:idUser", auth, async (req, res) => {
     await userUpdate(req, res)
   })
-  app.delete("/userDelete/:idUser", async (req, res) => {
+  app.delete("/userDelete/:idUser", authMaster, async (req, res) => {
     await userDelete(req, res)
   })
   app.get("/session", async (req, res) => {
@@ -72,10 +72,10 @@ const sessionRoutes = ({ app }) => {
   app.get("/recipe/:idRecipe", auth, async (req, res) => {
     await GetRecipe(req, res)
   })
-  app.post("/recipe", authMaster, async (req, res) => {
+  app.post("/recipe", auth, async (req, res) => {
     await CreateRecipes(req, res)
   })
-  app.put("/recipe", authMaster, async (req, res) => {
+  app.put("/recipe", auth, async (req, res) => {
     await UpdateRecipes(req, res)
   })
   app.delete("/recipe", authMaster, async (req, res) => {
