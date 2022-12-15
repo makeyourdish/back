@@ -84,17 +84,17 @@ export const userSignUp = async (req, res) => {
 export const userUpdate = async (req, res) => {
   const {
     body: { userName, email, password, isAdmin },
+    params: { idUser },
   } = req
-  const { idUser } = req.params
 
   try {
-    const [passwordHash, passwordSalt] = hashPassword(password)
-
     let user
 
-    if (password) {
+    if (password.length) {
+      const [passwordHash, passwordSalt] = hashPassword(password)
+
       user = await prisma.users.update({
-        where: { id: idUser },
+        where: { id: parseInt(idUser) },
         data: {
           userName: userName,
           email: email,
@@ -103,18 +103,62 @@ export const userUpdate = async (req, res) => {
           isAdmin: isAdmin || false,
         },
       })
+
+      res.send(user)
+
+      return
     }
 
     user = await prisma.users.update({
-      where: { id: idUser },
+      where: { id: parseInt(idUser) },
       data: {
         userName: userName,
         email: email,
-        isAdmin: isAdmin || false,
+        isAdmin: isAdmin,
       },
     })
 
     res.send(user)
+  } catch (error) {
+    res.status(400).send("Problème survenue : " + error)
+  }
+}
+
+export const userGetAll = async (req, res) => {
+  try {
+    const users = await prisma.users.findMany({})
+
+    res.status(200).send(users)
+  } catch (error) {
+    res.status(400).send("Problème survenue : " + error)
+  }
+}
+
+export const userGetOne = async (req, res) => {
+  const { idUser } = req.params
+
+  try {
+    const users = await prisma.users.findUnique({
+      where: { id: parseInt(idUser) },
+    })
+
+    res.status(200).send(users)
+  } catch (error) {
+    res.status(400).send("Problème survenue : " + error)
+  }
+}
+
+export const userDelete = async (req, res) => {
+  const {
+    params: { idUser },
+  } = req
+
+  try {
+    const users = await prisma.users.delete({
+      where: { id: parseInt(idUser) },
+    })
+
+    res.status(200).send({ users: users })
   } catch (error) {
     res.status(400).send("Problème survenue : " + error)
   }

@@ -30,7 +30,10 @@ import {
 import {
   userSession,
   userSignIn,
+  userGetAll,
+  userGetOne,
   userUpdate,
+  userDelete,
   userSignUp,
 } from "./route/Users.js"
 
@@ -47,8 +50,17 @@ const sessionRoutes = ({ app }) => {
   app.post("/sign-up", async (req, res) => {
     await userSignUp(req, res)
   })
-  app.put("/updateUser", async (req, res) => {
+  app.get("/userGetAll", async (req, res) => {
+    await userGetAll(req, res)
+  })
+  app.get("/userGetOne/:idUser", async (req, res) => {
+    await userGetOne(req, res)
+  })
+  app.put("/userUpdate/:idUser", async (req, res) => {
     await userUpdate(req, res)
+  })
+  app.delete("/userDelete/:idUser", async (req, res) => {
+    await userDelete(req, res)
   })
   app.get("/session", async (req, res) => {
     await userSession(req, res)
