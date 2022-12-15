@@ -1,26 +1,26 @@
-import jsonwebtoken from "jsonwebtoken";
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
+import jsonwebtoken from "jsonwebtoken"
+import pkg from "@prisma/client"
+const { PrismaClient } = pkg
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 const auth = async (req, res, next) => {
   const {
     headers: { authorization },
-  } = req;
-  const token = jsonwebtoken.decode(authorization);
+  } = req
+  const token = jsonwebtoken.decode(authorization)
 
   try {
     const user = await prisma.users.findUnique({
       where: { id: token.payload.userId },
-    });
-    res.userAdmin = token.userAdmin;
-    jsonwebtoken.verify(authorization, user.passwordSalt);
-    next();
-  } catch (err) {
-    console.log("token invalid !");
-    res.status(403).send("token invalid !");
-  }
-};
+    })
+    res.userAdmin = token.userAdmin
+    jsonwebtoken.verify(authorization, user.passwordSalt)
 
-export default auth;
+    next()
+  } catch (err) {
+    res.status(403).send("token invalid !")
+  }
+}
+
+export default auth
