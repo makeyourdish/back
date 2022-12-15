@@ -17,7 +17,7 @@ model Users {
   passwordHash String
   passwordSalt String
   isAdmin      Boolean        @default(false)
-  recipes      Recipes[]
+  // recipes      Recipes[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   recipesFav   AddFavorites[]
@@ -27,17 +27,17 @@ model Recipes {
   id              Int            @id @default(autoincrement())
   name            String
   personNb        Int
-  Description     String?
+  description     String?
   imageUrl        String
-  preparationTime DateTime       @db.Time()
+  preparationTime String
   step            String
   priceRange      Int
   difficulty      Int
   published       Boolean        @default(false)
-  author          Users          @relation(fields: [authorId], references: [id])
-  authorId        Int
-  recipeTypeId    RecipeType     @relation(fields: [recipeId], references: [id])
-  recipeId        Int
+  // author          Users          @relation(fields: [authorId], references: [id])
+  // authorId        Int
+  recipeType      RecipeType     @relation(fields: [recipeTypeId], references: [id])
+  recipeTypeId    Int
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   usersFav        AddFavorites[]
@@ -75,6 +75,8 @@ model AddFavorites {
 
 model Contain {
   id           Int         @id @default(autoincrement())
+  quantity     Float
+  quantityType String?
   recipeId     Int
   recipe       Recipes     @relation(fields: [recipeId], references: [id])
   ingredientId Int
