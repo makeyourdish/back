@@ -6,7 +6,6 @@ import morgan from "morgan"
 import pino from "pino"
 
 const logger = pino()
-
 const app = express()
 const port = process.env.SERVER_PORT
 
