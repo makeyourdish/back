@@ -9,7 +9,7 @@ export const GetCategoryIngredients = async (req, res) => {
 
     res.status(200).send({ categoryIngredients: categoryIngredients })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -27,7 +27,7 @@ export const CreateCategoryIngredient = async (req, res) => {
 
     res.status(200).send({ categoryIngredients: categoryIngredients })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -46,7 +46,7 @@ export const UpdateCategoryIngredient = async (req, res) => {
 
     res.status(200).send({ categoryIngredients: categoryIngredients })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -62,6 +62,6 @@ export const DeleteCategoryIngredient = async (req, res) => {
 
     res.status(200).send({ categoryIngredients: categoryIngredients })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }

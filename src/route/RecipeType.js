@@ -9,7 +9,7 @@ export const GetRecipeType = async (req, res) => {
 
     res.status(200).send({ recipeType: recipeType })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -27,7 +27,7 @@ export const CreateRecipeType = async (req, res) => {
 
     res.status(200).send({ recipeType: recipeType })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -46,7 +46,7 @@ export const UpdateRecipeType = async (req, res) => {
 
     res.status(200).send({ recipeType: recipeType })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -62,6 +62,6 @@ export const DeleteRecipeType = async (req, res) => {
 
     res.status(200).send({ recipeType: recipeType })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }

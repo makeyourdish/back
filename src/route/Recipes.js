@@ -9,7 +9,7 @@ export const GetRecipes = async (req, res) => {
 
     res.status(200).send({ recipes: recipes })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -24,7 +24,7 @@ export const GetRecipe = async (req, res) => {
 
     res.status(200).send({ recipes: recipe })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -80,7 +80,7 @@ export const CreateRecipes = async (req, res) => {
 
     res.status(200).send({ recipes: recipes })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -120,7 +120,7 @@ export const UpdateRecipes = async (req, res) => {
 
     res.status(200).send({ recipes: recipes })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -136,6 +136,6 @@ export const DeleteRecipe = async (req, res) => {
 
     res.status(200).send({ recipes: recipes })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }

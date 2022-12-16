@@ -47,7 +47,7 @@ export const userSignIn = async (req, res) => {
       userAdmin: user.isAdmin,
     })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -77,11 +77,11 @@ export const userSignUp = async (req, res) => {
 
     res.send(user)
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
-export const userUpdate = async (req, res) => {
+export const updateUser = async (req, res) => {
   const {
     body: { userName, email, password, isAdmin },
     params: { idUser },
@@ -120,22 +120,24 @@ export const userUpdate = async (req, res) => {
 
     res.send(user)
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
-export const userGetAll = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
     const users = await prisma.users.findMany({})
 
     res.status(200).send(users)
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
-export const userGetOne = async (req, res) => {
-  const { idUser } = req.params
+export const getUser = async (req, res) => {
+  const {
+    params: { idUser },
+  } = req
 
   try {
     const users = await prisma.users.findUnique({
@@ -144,11 +146,11 @@ export const userGetOne = async (req, res) => {
 
     res.status(200).send(users)
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
-export const userDelete = async (req, res) => {
+export const deleteUser = async (req, res) => {
   const {
     params: { idUser },
   } = req
@@ -160,7 +162,7 @@ export const userDelete = async (req, res) => {
 
     res.status(200).send({ users: users })
   } catch (error) {
-    res.status(400).send("Problème survenue : " + error)
+    res.status(400).send("Problème survenu : " + error)
   }
 }
 
@@ -170,7 +172,7 @@ export const userSession = async (req, res) => {
   } = req
 
   if (!authorization) {
-    return res.status(403).send("no token in the header authorization")
+    return res.status(403).send("Pas de token dans l'en-tête d'autorisation")
   }
 
   try {
@@ -189,6 +191,6 @@ export const userSession = async (req, res) => {
       userAdmin: userAdmin,
     })
   } catch (err) {
-    res.status(403).send("token invalid !")
+    res.status(403).send("Token invalide")
   }
 }

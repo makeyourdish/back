@@ -30,10 +30,10 @@ import {
 import {
   userSession,
   userSignIn,
-  userGetAll,
-  userGetOne,
-  userUpdate,
-  userDelete,
+  getUsers,
+  getUser,
+  updateUser,
+  deleteUser,
   userSignUp,
 } from "./route/Users.js"
 
@@ -43,7 +43,7 @@ const sessionRoutes = ({ app }) => {
   app.get("/exemple/ingredients", async (req, res) => {
     await ExempleGetIngredients(req, res)
   })
-  //User
+  //----------------------------- Users -----------------------------
   app.post("/sign-in", async (req, res) => {
     await userSignIn(req, res)
   })
@@ -51,38 +51,38 @@ const sessionRoutes = ({ app }) => {
     await userSignUp(req, res)
   })
   app.get("/userGetAll", authMaster, async (req, res) => {
-    await userGetAll(req, res)
+    await getUsers(req, res)
   })
-  app.get("/userGetOne/:idUser", auth, async (req, res) => {
-    await userGetOne(req, res)
+  app.get("/user/:idUser", auth, async (req, res) => {
+    await getUser(req, res)
   })
-  app.put("/userUpdate/:idUser", auth, async (req, res) => {
-    await userUpdate(req, res)
+  app.put("/user/:idUser", auth, async (req, res) => {
+    await updateUser(req, res)
   })
-  app.delete("/userDelete/:idUser", authMaster, async (req, res) => {
-    await userDelete(req, res)
+  app.delete("/user/:idUser", authMaster, async (req, res) => {
+    await deleteUser(req, res)
   })
   app.get("/session", async (req, res) => {
     await userSession(req, res)
   })
-  //Recipe
-  app.get("/allRecipes", auth, async (req, res) => {
+  //----------------------------- Recipes -----------------------------
+  app.get("/allRecipe", async (req, res) => {
     await GetRecipes(req, res)
   })
-  app.get("/recipe/:idRecipe", auth, async (req, res) => {
+  app.get("/recipe/:idRecipe", async (req, res) => {
     await GetRecipe(req, res)
   })
   app.post("/recipe", auth, async (req, res) => {
     await CreateRecipes(req, res)
   })
-  app.put("/recipe", auth, async (req, res) => {
+  app.put("/recipe/:idRecipe", auth, async (req, res) => {
     await UpdateRecipes(req, res)
   })
-  app.delete("/recipe", authMaster, async (req, res) => {
+  app.delete("/recipe/:idRecipe", authMaster, async (req, res) => {
     await DeleteRecipe(req, res)
   })
-  //ingredient
-  app.get("/allIngredient", auth, async (req, res) => {
+  //----------------------------- Iingredients -----------------------------
+  app.get("/allIngredient", async (req, res) => {
     await GetIngredients(req, res)
   })
   app.get("/ingredient/:idIngredient", auth, async (req, res) => {
@@ -91,36 +91,44 @@ const sessionRoutes = ({ app }) => {
   app.post("/ingredient", authMaster, async (req, res) => {
     await CreateIngredients(req, res)
   })
-  app.put("/ingredient", authMaster, async (req, res) => {
+  app.put("/ingredient/:idIngredient", authMaster, async (req, res) => {
     await UpdateIngredient(req, res)
   })
-  app.delete("/ingredient", authMaster, async (req, res) => {
+  app.delete("/ingredient/:idIngredient", authMaster, async (req, res) => {
     await DeleteIngredient(req, res)
   })
-  //CategoryIngredient
+  //----------------------------- CategoriesIngredients -----------------------------
   app.get("/allCategoryIngredient", auth, async (req, res) => {
     await GetCategoryIngredients(req, res)
   })
   app.post("/categoryIngredient", authMaster, async (req, res) => {
     await CreateCategoryIngredient(req, res)
   })
-  app.put("/categoryIngredient", authMaster, async (req, res) => {
-    await UpdateCategoryIngredient(req, res)
-  })
-  app.delete("/categoryIngredient", authMaster, async (req, res) => {
-    await DeleteCategoryIngredient(req, res)
-  })
-  //RecipeType
+  app.put(
+    "/categoryIngredient/:idCategoryIngredient",
+    authMaster,
+    async (req, res) => {
+      await UpdateCategoryIngredient(req, res)
+    }
+  )
+  app.delete(
+    "/categoryIngredient/:idCategoryIngredient",
+    authMaster,
+    async (req, res) => {
+      await DeleteCategoryIngredient(req, res)
+    }
+  )
+  //----------------------------- RecipeTypes -----------------------------
   app.get("/allRecipeType", auth, async (req, res) => {
     await GetRecipeType(req, res)
   })
   app.post("/recipeType", authMaster, async (req, res) => {
     await CreateRecipeType(req, res)
   })
-  app.put("/recipeType", authMaster, async (req, res) => {
+  app.put("/recipeType/:idRecipeType", authMaster, async (req, res) => {
     await UpdateRecipeType(req, res)
   })
-  app.delete("/recipeType", authMaster, async (req, res) => {
+  app.delete("/recipeType/:idRecipeType", authMaster, async (req, res) => {
     await DeleteRecipeType(req, res)
   })
 }

@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
 
     next()
   } catch (err) {
-    res.status(403).send("token invalid !")
+    res.status(403).send("Token invalide")
   }
 }
 

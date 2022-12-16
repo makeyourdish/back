@@ -23,7 +23,7 @@ const authMaster = async (req, res, next) => {
 
     res.status(403).send("Utilisateur non administrateur")
   } catch (err) {
-    res.status(403).send("token invalid !")
+    res.status(403).send("Token invalide")
   }
 }
 
