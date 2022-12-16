@@ -135,9 +135,7 @@ export const getUsers = async (req, res) => {
 }
 
 export const getUser = async (req, res) => {
-  const {
-    params: { idUser },
-  } = req
+  const { idUser } = req.params
 
   try {
     const users = await prisma.users.findUnique({

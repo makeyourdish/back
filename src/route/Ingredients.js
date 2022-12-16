@@ -5,9 +5,11 @@ const prisma = new PrismaClient()
 
 export const GetIngredients = async (req, res) => {
   try {
-    const ingredients = await prisma.ingredients.findMany({})
+    const ingredients = await prisma.ingredients.findMany({
+      include: { categoryIngredients: true },
+    })
 
-    res.status(200).send({ ingredients: ingredients })
+    res.status(200).send(ingredients)
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
@@ -18,10 +20,10 @@ export const GetIngredient = async (req, res) => {
 
   try {
     const ingredients = await prisma.ingredients.findUnique({
-      where: { id: idIngredient },
+      where: { id: parseInt(idIngredient) },
     })
 
-    res.status(200).send({ ingredients: ingredients })
+    res.status(200).send(ingredients)
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
@@ -49,12 +51,13 @@ export const CreateIngredients = async (req, res) => {
 
 export const UpdateIngredient = async (req, res) => {
   const {
-    body: { idIngredient, name, imageUrl, categoryIngredientsId },
+    body: { name, imageUrl, categoryIngredientsId },
+    params: { idIngredient },
   } = req
 
   try {
     const ingredients = await prisma.ingredients.update({
-      where: { id: idIngredient },
+      where: { id: parseInt(idIngredient) },
       data: {
         name: name,
         imageUrl: imageUrl,
@@ -69,13 +72,11 @@ export const UpdateIngredient = async (req, res) => {
 }
 
 export const DeleteIngredient = async (req, res) => {
-  const {
-    body: { idIngredient },
-  } = req
+  const { idIngredient } = req.params
 
   try {
     const ingredients = await prisma.ingredients.delete({
-      where: { id: idIngredient },
+      where: { id: parseInt(idIngredient) },
     })
 
     res.status(200).send({ ingredients: ingredients })

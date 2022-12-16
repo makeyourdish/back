@@ -85,9 +85,12 @@ const sessionRoutes = ({ app }) => {
   app.get("/allIngredient", async (req, res) => {
     await GetIngredients(req, res)
   })
-  app.get("/ingredient/:idIngredient", auth, async (req, res) => {
-    await GetIngredient(req, res)
-  })
+  app.get(
+    "/ingredient/:idIngredient",
+    /* auth, */ async (req, res) => {
+      await GetIngredient(req, res)
+    }
+  )
   app.post("/ingredient", authMaster, async (req, res) => {
     await CreateIngredients(req, res)
   })
