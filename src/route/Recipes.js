@@ -5,9 +5,11 @@ const prisma = new PrismaClient()
 
 export const GetRecipes = async (req, res) => {
   try {
-    const recipes = await prisma.recipes.findMany({})
+    const recipes = await prisma.recipes.findMany({
+      include: { recipeType: true },
+    })
 
-    res.status(200).send({ recipes: recipes })
+    res.status(200).send(recipes)
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
@@ -22,7 +24,7 @@ export const GetRecipe = async (req, res) => {
       include: { ingredients: { include: { ingredient: true } } },
     })
 
-    res.status(200).send({ recipes: recipe })
+    res.status(200).send(recipe)
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
@@ -61,10 +63,10 @@ export const CreateRecipes = async (req, res) => {
       },
     })
     ingredients.map(
-      async ({ id, quantity, quantityType }) =>
+      async ({ ingredientId, quantity, quantityType }) =>
         await prisma.contain.create({
           data: {
-            ingredientId: id,
+            ingredientId: ingredientId,
             quantity: quantity,
             quantityType: quantityType,
             recipeId: recipe.id,
@@ -87,7 +89,6 @@ export const CreateRecipes = async (req, res) => {
 export const UpdateRecipes = async (req, res) => {
   const {
     body: {
-      idRecipe,
       name,
       personNb,
       description,
@@ -98,12 +99,14 @@ export const UpdateRecipes = async (req, res) => {
       difficulty,
       published,
       recipeTypeId,
+      ingredients,
     },
+    params: { idRecipe },
   } = req
 
   try {
-    const recipes = await prisma.recipes.update({
-      where: { id: idRecipe },
+    const recipe = await prisma.recipes.update({
+      where: { id: Number(idRecipe) },
       data: {
         name: name,
         personNb: personNb,
@@ -117,21 +120,35 @@ export const UpdateRecipes = async (req, res) => {
         recipeTypeId: recipeTypeId,
       },
     })
+    ingredients.map(
+      async ({ id, ingredientId, quantity, quantityType }) =>
+        await prisma.contain.update({
+          where: { id: id },
+          data: {
+            ingredientId: ingredientId,
+            quantity: quantity,
+            quantityType: quantityType,
+            recipeId: recipe.id,
+          },
+        })
+    )
 
-    res.status(200).send({ recipes: recipes })
+    res.status(200).send({ recipe: recipe })
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
 }
 
 export const DeleteRecipe = async (req, res) => {
-  const {
-    body: { idRecipe },
-  } = req
+  const { idRecipe } = req.params
 
   try {
+    await prisma.contain.deleteMany({
+      where: { recipeId: Number(idRecipe) },
+    })
+
     const recipes = await prisma.recipes.delete({
-      where: { id: idRecipe },
+      where: { id: Number(idRecipe) },
     })
 
     res.status(200).send({ recipes: recipes })

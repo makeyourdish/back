@@ -7,7 +7,7 @@ export const GetRecipeType = async (req, res) => {
   try {
     const recipeType = await prisma.recipeType.findMany({})
 
-    res.status(200).send({ recipeType: recipeType })
+    res.status(200).send(recipeType)
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }

@@ -94,7 +94,7 @@ export const updateUser = async (req, res) => {
       const [passwordHash, passwordSalt] = hashPassword(password)
 
       user = await prisma.users.update({
-        where: { id: parseInt(idUser) },
+        where: { id: Number(idUser) },
         data: {
           userName: userName,
           email: email,
@@ -110,7 +110,7 @@ export const updateUser = async (req, res) => {
     }
 
     user = await prisma.users.update({
-      where: { id: parseInt(idUser) },
+      where: { id: Number(idUser) },
       data: {
         userName: userName,
         email: email,
@@ -139,7 +139,7 @@ export const getUser = async (req, res) => {
 
   try {
     const users = await prisma.users.findUnique({
-      where: { id: parseInt(idUser) },
+      where: { id: Number(idUser) },
     })
 
     res.status(200).send(users)
@@ -155,7 +155,7 @@ export const deleteUser = async (req, res) => {
 
   try {
     const users = await prisma.users.delete({
-      where: { id: parseInt(idUser) },
+      where: { id: Number(idUser) },
     })
 
     res.status(200).send({ users: users })

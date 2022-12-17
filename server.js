@@ -5,7 +5,13 @@ import "dotenv/config"
 import morgan from "morgan"
 import pino from "pino"
 
-const logger = pino()
+const logger = pino({
+  transport: {
+    target: "pino-pretty",
+    options: { colorize: true },
+  },
+})
+
 const app = express()
 const port = process.env.SERVER_PORT
 
@@ -20,4 +26,4 @@ app.use(express.json())
 
 sessionRoutes({ app })
 
-app.listen(port, () => logger.info(`🍹 Listening on :${port}`))
+app.listen(port, () => logger.info(`Listening on :${port}`))

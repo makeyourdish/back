@@ -20,7 +20,7 @@ export const GetIngredient = async (req, res) => {
 
   try {
     const ingredients = await prisma.ingredients.findUnique({
-      where: { id: parseInt(idIngredient) },
+      where: { id: Number(idIngredient) },
     })
 
     res.status(200).send(ingredients)
@@ -57,7 +57,7 @@ export const UpdateIngredient = async (req, res) => {
 
   try {
     const ingredients = await prisma.ingredients.update({
-      where: { id: parseInt(idIngredient) },
+      where: { id: Number(idIngredient) },
       data: {
         name: name,
         imageUrl: imageUrl,
@@ -76,7 +76,7 @@ export const DeleteIngredient = async (req, res) => {
 
   try {
     const ingredients = await prisma.ingredients.delete({
-      where: { id: parseInt(idIngredient) },
+      where: { id: Number(idIngredient) },
     })
 
     res.status(200).send({ ingredients: ingredients })
