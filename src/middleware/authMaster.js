@@ -17,8 +17,10 @@ const authMaster = async (req, res, next) => {
     res.userAdmin = jwt.userAdmin
     jsonwebtoken.verify(token, user.passwordSalt)
 
-    if (user.isAdmin == true) {
+    if (user.isAdmin) {
       next()
+
+      return
     }
 
     res.status(403).send("Utilisateur non administrateur")
