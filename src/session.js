@@ -6,7 +6,6 @@ import {
   GetCategoryIngredients,
   UpdateCategoryIngredient,
 } from "./route/CategoryIngredient.js"
-import { ExempleGetIngredients } from "./route/exemple.js"
 import {
   CreateIngredients,
   DeleteIngredient,
@@ -38,12 +37,8 @@ import {
   userSignUp,
 } from "./route/Users.js"
 
+//************************ ALL definition route are here ************************
 const sessionRoutes = ({ app }) => {
-  //* ALL definition route are here
-  //exemple route
-  app.get("/exemple/ingredients", async (req, res) => {
-    await ExempleGetIngredients(req, res)
-  })
   //*********************** Users **********************
   app.post("/sign-in", async (req, res) => {
     await userSignIn(req, res)
