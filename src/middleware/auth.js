@@ -6,20 +6,22 @@ const prisma = new PrismaClient()
 
 const auth = async (req, res, next) => {
   const {
-    headers: { authorization },
+    headers: { token },
   } = req
-  const token = jsonwebtoken.decode(authorization)
+  const jwt = jsonwebtoken.decode(token)
 
   try {
     const user = await prisma.users.findUnique({
-      where: { id: token.payload.userId },
+      where: { id: jwt.payload.userId },
     })
-    res.userAdmin = token.userAdmin
-    jsonwebtoken.verify(authorization, user.passwordSalt)
+    res.userAdmin = jwt.userAdmin
+    jsonwebtoken.verify(token, user.passwordSalt)
 
     next()
   } catch (err) {
-    res.status(403).send("Token invalide")
+    res
+      .status(403)
+      .send("Session invalide ou expirée, veuillez vous reconnecter")
   }
 }
 
