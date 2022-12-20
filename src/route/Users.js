@@ -17,6 +17,12 @@ export const userSignIn = async (req, res) => {
       },
     })
 
+    if (!user) {
+      res.status(403).send("L'email ou le mot de passe est invalide")
+
+      return
+    }
+
     // eslint-disable-next-line no-unused-vars
     const [passwordHash, passwordSalt] = hashPassword(
       password,
@@ -24,7 +30,7 @@ export const userSignIn = async (req, res) => {
     )
 
     if (passwordHash !== user.passwordHash) {
-      res.status(403).send("Email or Password is invalid")
+      res.status(403).send("L'email ou le mot de passe est invalide")
 
       return
     }
@@ -34,6 +40,8 @@ export const userSignIn = async (req, res) => {
         payload: {
           userId: user.id,
           userAdmin: user.isAdmin,
+          userEmail: user.email,
+          userName: user.userName,
         },
       },
       user.passwordSalt,
@@ -53,7 +61,7 @@ export const userSignIn = async (req, res) => {
 
 export const userSignUp = async (req, res) => {
   const {
-    body: { userName, email, password, isAdmin },
+    body: { userName, email, password },
   } = req
 
   try {
@@ -65,13 +73,50 @@ export const userSignUp = async (req, res) => {
         email: email,
         passwordHash: passwordHash,
         passwordSalt: passwordSalt,
-        isAdmin: isAdmin || false,
+        isAdmin: false,
       },
     })
 
     const user = await prisma.users.findFirst({
       where: {
         email: email,
+      },
+    })
+
+    res.send(user)
+  } catch (error) {
+    res.status(400).send("Problème survenu : " + error)
+  }
+}
+
+export const userCreate = async (req, res) => {
+  //* To create a user in administration
+  const {
+    body: { userName, email, password, isAdmin },
+  } = req
+
+  try {
+    const [passwordHash, passwordSalt] = hashPassword(password)
+
+    const user = await prisma.users.findFirst({
+      where: {
+        email: email,
+      },
+    })
+
+    if (user) {
+      res.status(403).send("L'email est déjà utilisé")
+
+      return
+    }
+
+    await prisma.users.create({
+      data: {
+        userName: userName,
+        email: email,
+        passwordHash: passwordHash,
+        passwordSalt: passwordSalt,
+        isAdmin: isAdmin || false,
       },
     })
 
@@ -138,11 +183,17 @@ export const getUser = async (req, res) => {
   const { idUser } = req.params
 
   try {
-    const users = await prisma.users.findUnique({
+    const user = await prisma.users.findUnique({
       where: { id: Number(idUser) },
     })
 
-    res.status(200).send(users)
+    if (!user) {
+      res.status(404).send("L'utilisateur n'existe pas")
+
+      return
+    }
+
+    res.status(200).send(user)
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }

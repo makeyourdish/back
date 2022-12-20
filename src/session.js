@@ -30,6 +30,7 @@ import {
 import {
   userSession,
   userSignIn,
+  userCreate,
   getUsers,
   getUser,
   updateUser,
@@ -38,17 +39,20 @@ import {
 } from "./route/Users.js"
 
 const sessionRoutes = ({ app }) => {
-  //ALL definition route are here
+  //* ALL definition route are here
   //exemple route
   app.get("/exemple/ingredients", async (req, res) => {
     await ExempleGetIngredients(req, res)
   })
-  //----------------------------- Users -----------------------------
+  //*********************** Users **********************
   app.post("/sign-in", async (req, res) => {
     await userSignIn(req, res)
   })
   app.post("/sign-up", async (req, res) => {
     await userSignUp(req, res)
+  })
+  app.post("/user", authMaster, async (req, res) => {
+    await userCreate(req, res)
   })
   app.get("/userGetAll", authMaster, async (req, res) => {
     await getUsers(req, res)
@@ -65,7 +69,7 @@ const sessionRoutes = ({ app }) => {
   app.get("/session", async (req, res) => {
     await userSession(req, res)
   })
-  //----------------------------- Recipes -----------------------------
+  //*********************** Recipes **********************
   app.get("/allRecipe", async (req, res) => {
     await GetRecipes(req, res)
   })
@@ -81,7 +85,7 @@ const sessionRoutes = ({ app }) => {
   app.delete("/recipe/:idRecipe", authMaster, async (req, res) => {
     await DeleteRecipe(req, res)
   })
-  //----------------------------- Iingredients -----------------------------
+  //*********************** Iingredients **********************
   app.get("/allIngredient", async (req, res) => {
     await GetIngredients(req, res)
   })
@@ -97,7 +101,7 @@ const sessionRoutes = ({ app }) => {
   app.delete("/ingredient/:idIngredient", authMaster, async (req, res) => {
     await DeleteIngredient(req, res)
   })
-  //----------------------------- CategoriesIngredients -----------------------------
+  //*********************** CategoriesIngredients **********************
   app.get("/allCategoryIngredient", auth, async (req, res) => {
     await GetCategoryIngredients(req, res)
   })
@@ -118,7 +122,7 @@ const sessionRoutes = ({ app }) => {
       await DeleteCategoryIngredient(req, res)
     }
   )
-  //----------------------------- RecipeTypes -----------------------------
+  //*********************** RecipeTypes **********************
   app.get("/allRecipeType", auth, async (req, res) => {
     await GetRecipeType(req, res)
   })
