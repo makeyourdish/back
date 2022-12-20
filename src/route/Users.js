@@ -4,13 +4,10 @@ import pkg from "@prisma/client"
 const { PrismaClient } = pkg
 
 const prisma = new PrismaClient()
-const prisma = new PrismaClient()
 
 export const userSignIn = async (req, res) => {
   const {
     body: { email, password },
-  } = req
-
   } = req
 
   try {
@@ -25,7 +22,6 @@ export const userSignIn = async (req, res) => {
 
       return
     }
-    })
 
     if (!user) {
       res.status(403).send("L'email ou le mot de passe est invalide")
@@ -34,17 +30,12 @@ export const userSignIn = async (req, res) => {
     }
 
     // eslint-disable-next-line no-unused-vars
-    // eslint-disable-next-line no-unused-vars
     const [passwordHash, passwordSalt] = hashPassword(
       password,
       user.passwordSalt
     )
-    )
 
     if (passwordHash !== user.passwordHash) {
-      res.status(403).send("L'email ou le mot de passe est invalide")
-
-      return
       res.status(403).send("L'email ou le mot de passe est invalide")
 
       return
@@ -57,8 +48,6 @@ export const userSignIn = async (req, res) => {
           userAdmin: user.isAdmin,
           userEmail: user.email,
           userName: user.userName,
-          userEmail: user.email,
-          userName: user.userName,
         },
       },
       user.passwordSalt,
@@ -66,23 +55,19 @@ export const userSignIn = async (req, res) => {
         expiresIn: "24 hours",
       }
     )
-    )
 
     res.send({
       token: token,
       userAdmin: user.isAdmin,
     })
-    })
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
-}
 }
 
 export const userSignUp = async (req, res) => {
   const {
     body: { userName, email, password },
-  } = req
   } = req
 
   try {
@@ -235,21 +220,17 @@ export const deleteUser = async (req, res) => {
     res.status(400).send("Problème survenu : " + error)
   }
 }
-}
 
 export const userSession = async (req, res) => {
   const {
     headers: { authorization },
-  } = req
   } = req
 
   if (!authorization) {
     return res.status(403).send("Pas de token dans l'en-tête d'autorisation")
   }
 
-
   try {
-    const token = jsonwebtoken.decode(authorization)
     const token = jsonwebtoken.decode(authorization)
     const user = await prisma.users.findUnique({
       where: { id: token.payload.userId },
@@ -267,6 +248,4 @@ export const userSession = async (req, res) => {
   } catch (err) {
     res.status(403).send("Token invalide")
   }
-}
-
 }

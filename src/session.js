@@ -48,8 +48,6 @@ const sessionRoutes = ({ app }) => {
   app.post("/sign-in", async (req, res) => {
     await userSignIn(req, res)
   })
-    await userSignIn(req, res)
-  })
   app.post("/sign-up", async (req, res) => {
     await userSignUp(req, res)
   })
