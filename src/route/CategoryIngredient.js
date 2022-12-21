@@ -33,7 +33,8 @@ export const CreateCategoryIngredient = async (req, res) => {
 
 export const UpdateCategoryIngredient = async (req, res) => {
   const {
-    body: { idCategoryIngredient, name },
+    body: { name },
+    params: { idCategoryIngredient },
   } = req
 
   try {
@@ -51,9 +52,7 @@ export const UpdateCategoryIngredient = async (req, res) => {
 }
 
 export const DeleteCategoryIngredient = async (req, res) => {
-  const {
-    body: { idCategoryIngredient },
-  } = req
+  const { idCategoryIngredient } = req.params
 
   try {
     const categoryIngredients = await prisma.categoryIngredients.delete({

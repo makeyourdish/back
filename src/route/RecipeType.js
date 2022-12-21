@@ -33,7 +33,8 @@ export const CreateRecipeType = async (req, res) => {
 
 export const UpdateRecipeType = async (req, res) => {
   const {
-    body: { idRecipeType, name },
+    body: { name },
+    params: { idRecipeType },
   } = req
 
   try {
@@ -51,9 +52,7 @@ export const UpdateRecipeType = async (req, res) => {
 }
 
 export const DeleteRecipeType = async (req, res) => {
-  const {
-    body: { idRecipeType },
-  } = req
+  const { idRecipeType } = req.params
 
   try {
     const recipeType = await prisma.recipeType.delete({
