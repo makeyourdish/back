@@ -55,7 +55,7 @@ const sessionRoutes = ({ app }) => {
   app.get("/user/:idUser", auth, async (req, res) => {
     await getUser(req, res)
   })
-  app.put("/user/:idUser", auth, async (req, res) => {
+  app.put("/user/:idUser", authMaster, async (req, res) => {
     await updateUser(req, res)
   })
   app.delete("/user/:idUser", authMaster, async (req, res) => {
@@ -80,7 +80,7 @@ const sessionRoutes = ({ app }) => {
   app.delete("/recipe/:idRecipe", authMaster, async (req, res) => {
     await DeleteRecipe(req, res)
   })
-  //*********************** Iingredients **********************
+  //*********************** Ingredients **********************
   app.get("/allIngredient", async (req, res) => {
     await GetIngredients(req, res)
   })
