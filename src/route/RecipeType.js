@@ -39,7 +39,7 @@ export const UpdateRecipeType = async (req, res) => {
 
   try {
     const recipeType = await prisma.recipeType.update({
-      where: { id: idRecipeType },
+      where: { id: Number(idRecipeType) },
       data: {
         name: name,
       },
@@ -56,7 +56,7 @@ export const DeleteRecipeType = async (req, res) => {
 
   try {
     const recipeType = await prisma.recipeType.delete({
-      where: { id: idRecipeType },
+      where: { id: Number(idRecipeType) },
     })
 
     res.status(200).send({ recipeType: recipeType })
