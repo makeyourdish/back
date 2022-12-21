@@ -39,7 +39,7 @@ export const UpdateCategoryIngredient = async (req, res) => {
 
   try {
     const categoryIngredients = await prisma.categoryIngredients.update({
-      where: { id: idCategoryIngredient },
+      where: { id: Number(idCategoryIngredient },
       data: {
         name: name,
       },
@@ -56,7 +56,7 @@ export const DeleteCategoryIngredient = async (req, res) => {
 
   try {
     const categoryIngredients = await prisma.categoryIngredients.delete({
-      where: { id: idCategoryIngredient },
+      where: { id: Number(idCategoryIngredient) },
     })
 
     res.status(200).send({ categoryIngredients: categoryIngredients })
