@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 export const GetCategoryIngredients = async (req, res) => {
   try {
-    const categoryIngredients = await prisma.categoryIngredients.findMany({})
+    const categoryIngredients = await prisma.categoryIngredients.findMany({include:{ingredients:true}})
 
     res.status(200).send(categoryIngredients)
   } catch (error) {
