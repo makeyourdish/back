@@ -39,7 +39,7 @@ export const UpdateCategoryIngredient = async (req, res) => {
 
   try {
     const categoryIngredients = await prisma.categoryIngredients.update({
-      where: { id: Number(idCategoryIngredient },
+      where: { id: Number(idCategoryIngredient) },
       data: {
         name: name,
       },
