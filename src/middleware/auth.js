@@ -21,7 +21,9 @@ const auth = async (req, res, next) => {
   } catch (err) {
     res
       .status(403)
-      .send("Session invalide ou expirée, veuillez vous reconnecter")
+      .send(
+        "Session invalide ou expirée, veuillez vous reconnecter et actualiser la page"
+      )
   }
 }
 
