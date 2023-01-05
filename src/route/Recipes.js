@@ -15,6 +15,32 @@ export const GetRecipes = async (req, res) => {
   }
 }
 
+export const GetNormalRecipes = async (req, res) => {
+  try {
+    const recipes = await prisma.recipes.findMany({
+      where:{isCocktail: false},
+      include: { recipeType: true },
+    })
+
+    res.status(200).send(recipes)
+  } catch (error) {
+    res.status(400).send("Problème survenu : " + error)
+  }
+}
+
+export const GetCocktailRecipes = async (req, res) => {
+  try {
+    const recipes = await prisma.recipes.findMany({
+      where:{isCocktail: true},
+      include: { recipeType: true },
+    })
+
+    res.status(200).send(recipes)
+  } catch (error) {
+    res.status(400).send("Problème survenu : " + error)
+  }
+}
+
 export const GetRecipe = async (req, res) => {
   const { idRecipe } = req.params
 

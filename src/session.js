@@ -16,6 +16,8 @@ import {
 import {
   CreateRecipes,
   DeleteRecipe,
+  GetCocktailRecipes,
+  GetNormalRecipes,
   GetRecipe,
   GetRecipes,
   UpdateRecipes,
@@ -67,6 +69,12 @@ const sessionRoutes = ({ app }) => {
   //*********************** Recipes **********************
   app.get("/allRecipe", async (req, res) => {
     await GetRecipes(req, res)
+  })
+  app.get("/NormalRecipe", async (req, res) => {
+    await GetNormalRecipes(req, res)
+  })
+  app.get("/CocktailRecipe", async (req, res) => {
+    await GetCocktailRecipes(req, res)
   })
   app.get("/recipe/:idRecipe", async (req, res) => {
     await GetRecipe(req, res)
