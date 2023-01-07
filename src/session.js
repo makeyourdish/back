@@ -79,7 +79,7 @@ const sessionRoutes = ({ app }) => {
   app.get("/recipe/:idRecipe", async (req, res) => {
     await GetRecipe(req, res)
   })
-  app.post("/recipe", auth, async (req, res) => {
+  app.post("/recipe", async (req, res) => {
     await CreateRecipes(req, res)
   })
   app.put("/recipe/:idRecipe", auth, async (req, res) => {

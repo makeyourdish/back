@@ -50,7 +50,11 @@ export const GetRecipe = async (req, res) => {
       include: { ingredients: { include: { ingredient: true } } },
     })
 
-    res.status(200).send(recipe)
+    if(!recipe) {
+      res.status(404).send("La recette n'a pas été trouvée !")
+    }else {
+      res.status(200).send(recipe)
+    }
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
@@ -68,6 +72,7 @@ export const CreateRecipes = async (req, res) => {
       priceRange,
       difficulty,
       published,
+      isCocktail,
       recipeTypeId,
       ingredients,
     },
@@ -85,6 +90,7 @@ export const CreateRecipes = async (req, res) => {
         priceRange: priceRange,
         difficulty: difficulty,
         published: published,
+        isCocktail:isCocktail,
         recipeTypeId: recipeTypeId,
       },
     })
@@ -124,6 +130,7 @@ export const UpdateRecipes = async (req, res) => {
       priceRange,
       difficulty,
       published,
+      isCocktail,
       recipeTypeId,
       ingredients,
     },
@@ -143,6 +150,7 @@ export const UpdateRecipes = async (req, res) => {
         priceRange: priceRange,
         difficulty: difficulty,
         published: published,
+        isCocktail:isCocktail,
         recipeTypeId: recipeTypeId,
       },
     })
