@@ -3,9 +3,23 @@ const { PrismaClient } = pkg
 
 const prisma = new PrismaClient()
 
-export const GetRecipeType = async (req, res) => {
+export const GetRecipeTypes = async (req, res) => {
   try {
-    const recipeType = await prisma.recipeType.findMany({})
+    const recipeTypes = await prisma.recipeType.findMany({})
+
+    res.status(200).send(recipeTypes)
+  } catch (error) {
+    res.status(400).send("Problème survenu : " + error)
+  }
+}
+
+export const GetRecipeType = async (req, res) => {
+  const { idRecipeType } = req.params
+
+  try {
+    const recipeType = await prisma.recipeType.findUnique({
+      where: { id: Number(idRecipeType) },
+    })
 
     res.status(200).send(recipeType)
   } catch (error) {
@@ -15,14 +29,14 @@ export const GetRecipeType = async (req, res) => {
 
 export const CreateRecipeType = async (req, res) => {
   const {
-    body: { name,isCocktail },
+    body: { name, isCocktail },
   } = req
 
   try {
     const recipeType = await prisma.recipeType.create({
       data: {
         name: name,
-        isCocktail:isCocktail
+        isCocktail: isCocktail,
       },
     })
 
@@ -34,7 +48,7 @@ export const CreateRecipeType = async (req, res) => {
 
 export const UpdateRecipeType = async (req, res) => {
   const {
-    body: { name ,isCocktail},
+    body: { name, isCocktail },
     params: { idRecipeType },
   } = req
 
@@ -43,7 +57,7 @@ export const UpdateRecipeType = async (req, res) => {
       where: { id: Number(idRecipeType) },
       data: {
         name: name,
-        isCocktail:isCocktail
+        isCocktail: isCocktail,
       },
     })
 
@@ -58,13 +72,13 @@ export const DeleteRecipeType = async (req, res) => {
 
   try {
     const recipes = await prisma.recipes.deleteMany({
-      where: {recipeTypeId: Number(idRecipeType)}
+      where: { recipeTypeId: Number(idRecipeType) },
     })
     const recipeType = await prisma.recipeType.delete({
       where: { id: Number(idRecipeType) },
     })
 
-    res.status(200).send({ recipeType: recipeType , recipes:recipes})
+    res.status(200).send({ recipeType: recipeType, recipes: recipes })
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }

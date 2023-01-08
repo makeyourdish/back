@@ -28,6 +28,7 @@ import {
 import {
   CreateRecipeType,
   DeleteRecipeType,
+  GetRecipeTypes,
   GetRecipeType,
   UpdateRecipeType,
 } from "./route/RecipeType.js"
@@ -147,6 +148,9 @@ const sessionRoutes = ({ app }) => {
   )
   //*********************** RecipeTypes **********************
   app.get("/allRecipeType", auth, async (req, res) => {
+    await GetRecipeTypes(req, res)
+  })
+  app.get("/recipeType/:idRecipeType", authMaster, async (req, res) => {
     await GetRecipeType(req, res)
   })
   app.post("/recipeType", authMaster, async (req, res) => {
