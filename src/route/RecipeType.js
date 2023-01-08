@@ -57,11 +57,14 @@ export const DeleteRecipeType = async (req, res) => {
   const { idRecipeType } = req.params
 
   try {
+    const recipes = await prisma.recipes.deleteMany({
+      where: {recipeTypeId: Number(idRecipeType)}
+    })
     const recipeType = await prisma.recipeType.delete({
       where: { id: Number(idRecipeType) },
     })
 
-    res.status(200).send({ recipeType: recipeType })
+    res.status(200).send({ recipeType: recipeType , recipes:recipes})
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
