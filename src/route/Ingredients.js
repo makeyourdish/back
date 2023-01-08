@@ -15,10 +15,9 @@ export const GetIngredients = async (req, res) => {
   }
 }
 
-export const GetNormalIngredients = async (req, res) => {
+export const GetNormalAndCocktailIngredients = async (req, res) => {
   try {
     const ingredients = await prisma.categoryIngredients.findMany({
-      where: { isCocktail: false},
       include: { ingredients: true },
     })
 
@@ -28,10 +27,10 @@ export const GetNormalIngredients = async (req, res) => {
   }
 }
 
-export const GetCocktailIngredients= async (req, res) => {
+export const GetCocktailIngredients = async (req, res) => {
   try {
     const ingredients = await prisma.categoryIngredients.findMany({
-      where: { isCocktail: true},
+      where: { isCocktail: true },
       include: { ingredients: true },
     })
 

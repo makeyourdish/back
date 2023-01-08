@@ -183,38 +183,28 @@ export const updateUserPassword = async (req, res) => {
     })
 
     if (!user) {
-      res.status(403).send("L'email ou le mot de passe est invalide")
+      res.status(403).send("L'utilisateur n'a pas été trouvé")
 
       return
     }
 
-    // eslint-disable-next-line no-unused-vars
-    const [oldPasswordHash, passwordSalt] = hashPassword(
-      oldPassword,
-      user.passwordSalt
-    )
+    const [oldPasswordHash] = hashPassword(oldPassword, user.passwordSalt)
 
     if (oldPasswordHash !== user.passwordHash) {
-      res.status(403).send("L'email ou le mot de passe est invalide")
+      res.status(403).send("L'ancien mot de passe est invalide")
 
       return
     }
 
-    if (password?.length) {
-      const [passwordHash, passwordSalt] = hashPassword(password)
+    const [passwordHash, passwordSalt] = hashPassword(password)
 
-      user = await prisma.users.update({
-        where: { id: Number(idUser) },
-        data: {
-          passwordHash: passwordHash,
-          passwordSalt: passwordSalt,
-        },
-      })
-
-      res.send(user)
-
-      return
-    }
+    user = await prisma.users.update({
+      where: { id: Number(idUser) },
+      data: {
+        passwordHash: passwordHash,
+        passwordSalt: passwordSalt,
+      },
+    })
 
     res.send(user)
   } catch (error) {

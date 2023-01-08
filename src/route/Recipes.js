@@ -72,7 +72,6 @@ export const CreateRecipes = async (req, res) => {
       priceRange,
       difficulty,
       published,
-      isCocktail,
       recipeTypeId,
       ingredients,
     },
@@ -90,7 +89,6 @@ export const CreateRecipes = async (req, res) => {
         priceRange: priceRange,
         difficulty: difficulty,
         published: published,
-        isCocktail: isCocktail,
         recipeTypeId: recipeTypeId,
       },
     })
@@ -130,7 +128,6 @@ export const UpdateRecipes = async (req, res) => {
       priceRange,
       difficulty,
       published,
-      isCocktail,
       recipeTypeId,
       ingredients,
     },
@@ -150,7 +147,6 @@ export const UpdateRecipes = async (req, res) => {
         priceRange: priceRange,
         difficulty: difficulty,
         published: published,
-        isCocktail: isCocktail,
         recipeTypeId: recipeTypeId,
       },
     })
