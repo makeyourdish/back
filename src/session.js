@@ -62,16 +62,16 @@ const sessionRoutes = ({ app }) => {
   app.get("/user/:idUser", auth, async (req, res) => {
     await getUser(req, res)
   })
-  app.put("/user/:idUser", authMaster, async (req, res) => {
+  app.put("/user/:idUser", auth, async (req, res) => {
     await updateUser(req, res)
   })
-  app.delete("/user/:idUser", authMaster, async (req, res) => {
+  app.delete("/user/:idUser", auth, async (req, res) => {
     await deleteUser(req, res)
   })
   app.get("/session", async (req, res) => {
     await userSession(req, res)
   })
-  app.put("/user/:idUser/updatePassword", authMaster, async (req, res) => {
+  app.put("/user/:idUser/updatePassword", auth, async (req, res) => {
     await updateUserPassword(req, res)
   })
   //*********************** Recipes **********************
