@@ -28,6 +28,7 @@ import {
 import {
   CreateRecipeType,
   DeleteRecipeType,
+  GetRecipeTypes,
   GetRecipeType,
   UpdateRecipeType,
 } from "./route/RecipeType.js"
@@ -61,16 +62,16 @@ const sessionRoutes = ({ app }) => {
   app.get("/user/:idUser", auth, async (req, res) => {
     await getUser(req, res)
   })
-  app.put("/user/:idUser", authMaster, async (req, res) => {
+  app.put("/user/:idUser", auth, async (req, res) => {
     await updateUser(req, res)
   })
-  app.delete("/user/:idUser", authMaster, async (req, res) => {
+  app.delete("/user/:idUser", auth, async (req, res) => {
     await deleteUser(req, res)
   })
   app.get("/session", async (req, res) => {
     await userSession(req, res)
   })
-  app.put("/user/:idUser/updatePassword", authMaster, async (req, res) => {
+  app.put("/user/:idUser/updatePassword", auth, async (req, res) => {
     await updateUserPassword(req, res)
   })
   //*********************** Recipes **********************
@@ -147,6 +148,9 @@ const sessionRoutes = ({ app }) => {
   )
   //*********************** RecipeTypes **********************
   app.get("/allRecipeType", auth, async (req, res) => {
+    await GetRecipeTypes(req, res)
+  })
+  app.get("/recipeType/:idRecipeType", authMaster, async (req, res) => {
     await GetRecipeType(req, res)
   })
   app.post("/recipeType", authMaster, async (req, res) => {
