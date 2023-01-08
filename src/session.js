@@ -4,6 +4,7 @@ import {
   CreateCategoryIngredient,
   DeleteCategoryIngredient,
   GetCategoryIngredients,
+  GetCategoryIngredient,
   UpdateCategoryIngredient,
 } from "./route/CategoryIngredient.js"
 import {
@@ -12,7 +13,7 @@ import {
   GetCocktailIngredients,
   GetIngredient,
   GetIngredients,
-  GetNormalIngredients,
+  GetNormalAndCocktailIngredients,
   UpdateIngredient,
 } from "./route/Ingredients.js"
 import {
@@ -99,7 +100,7 @@ const sessionRoutes = ({ app }) => {
     await GetIngredients(req, res)
   })
   app.get("/NormalIngredients", async (req, res) => {
-    await GetNormalIngredients(req, res)
+    await GetNormalAndCocktailIngredients(req, res)
   })
   app.get("/CocktailIngredients", async (req, res) => {
     await GetCocktailIngredients(req, res)
@@ -120,6 +121,13 @@ const sessionRoutes = ({ app }) => {
   app.get("/allCategoryIngredient", auth, async (req, res) => {
     await GetCategoryIngredients(req, res)
   })
+  app.get(
+    "/categoryIngredient/:idCategoryIngredient",
+    authMaster,
+    async (req, res) => {
+      await GetCategoryIngredient(req, res)
+    }
+  )
   app.post("/categoryIngredient", authMaster, async (req, res) => {
     await CreateCategoryIngredient(req, res)
   })
