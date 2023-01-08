@@ -87,7 +87,7 @@ const sessionRoutes = ({ app }) => {
   app.get("/recipe/:idRecipe", async (req, res) => {
     await GetRecipe(req, res)
   })
-  app.post("/recipe", async (req, res) => {
+  app.post("/recipe", auth, async (req, res) => {
     await CreateRecipes(req, res)
   })
   app.put("/recipe/:idRecipe", auth, async (req, res) => {
@@ -119,7 +119,7 @@ const sessionRoutes = ({ app }) => {
     await DeleteIngredient(req, res)
   })
   //*********************** CategoriesIngredients **********************
-  app.get("/allCategoryIngredient", auth, async (req, res) => {
+  app.get("/allCategoryIngredient", async (req, res) => {
     await GetCategoryIngredients(req, res)
   })
   app.get(
