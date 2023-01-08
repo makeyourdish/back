@@ -15,13 +15,14 @@ export const GetRecipeType = async (req, res) => {
 
 export const CreateRecipeType = async (req, res) => {
   const {
-    body: { name },
+    body: { name,isCocktail },
   } = req
 
   try {
     const recipeType = await prisma.recipeType.create({
       data: {
         name: name,
+        isCocktail:isCocktail
       },
     })
 
@@ -33,7 +34,7 @@ export const CreateRecipeType = async (req, res) => {
 
 export const UpdateRecipeType = async (req, res) => {
   const {
-    body: { name },
+    body: { name ,isCocktail},
     params: { idRecipeType },
   } = req
 
@@ -42,6 +43,7 @@ export const UpdateRecipeType = async (req, res) => {
       where: { id: Number(idRecipeType) },
       data: {
         name: name,
+        isCocktail:isCocktail
       },
     })
 

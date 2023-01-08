@@ -33,7 +33,6 @@ model Recipes {
   step            String
   priceRange      Int
   difficulty      Int
-  isCocktail      Boolean        @default(false)
   published       Boolean        @default(false)
   // author          Users          @relation(fields: [authorId], references: [id])
   // authorId        Int
@@ -51,14 +50,14 @@ model Ingredients {
   imageUrl              String?
   categoryIngredients   CategoryIngredients @relation(fields: [categoryIngredientsId], references: [id])
   categoryIngredientsId Int
-  isCocktail            Boolean             @default(false)
   recipes               Contain[]
 }
 
 model RecipeType {
-  id      Int       @id @default(autoincrement())
-  name    String
-  recipes Recipes[]
+  id         Int       @id @default(autoincrement())
+  name       String
+  isCocktail Boolean   @default(false)
+  recipes    Recipes[]
 }
 
 model CategoryIngredients {

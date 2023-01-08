@@ -15,13 +15,14 @@ export const GetCategoryIngredients = async (req, res) => {
 
 export const CreateCategoryIngredient = async (req, res) => {
   const {
-    body: { name },
+    body: { name, isCocktail },
   } = req
 
   try {
     const categoryIngredients = await prisma.categoryIngredients.create({
       data: {
         name: name,
+        isCocktail:isCocktail,
       },
     })
 
@@ -33,7 +34,7 @@ export const CreateCategoryIngredient = async (req, res) => {
 
 export const UpdateCategoryIngredient = async (req, res) => {
   const {
-    body: { name },
+    body: { name,isCocktail },
     params: { idCategoryIngredient },
   } = req
 
@@ -42,6 +43,7 @@ export const UpdateCategoryIngredient = async (req, res) => {
       where: { id: Number(idCategoryIngredient) },
       data: {
         name: name,
+        isCocktail:isCocktail
       },
     })
 

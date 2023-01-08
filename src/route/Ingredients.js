@@ -15,6 +15,32 @@ export const GetIngredients = async (req, res) => {
   }
 }
 
+export const GetNormalIngredients = async (req, res) => {
+  try {
+    const ingredients = await prisma.categoryIngredients.findMany({
+      where: { isCocktail: false},
+      include: { ingredients: true },
+    })
+
+    res.status(200).send(ingredients)
+  } catch (error) {
+    res.status(400).send("Problème survenu : " + error)
+  }
+}
+
+export const GetCocktailIngredients= async (req, res) => {
+  try {
+    const ingredients = await prisma.categoryIngredients.findMany({
+      where: { isCocktail: true},
+      include: { ingredients: true },
+    })
+
+    res.status(200).send(ingredients)
+  } catch (error) {
+    res.status(400).send("Problème survenu : " + error)
+  }
+}
+
 export const GetIngredient = async (req, res) => {
   const { idIngredient } = req.params
 

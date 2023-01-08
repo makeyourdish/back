@@ -9,8 +9,10 @@ import {
 import {
   CreateIngredients,
   DeleteIngredient,
+  GetCocktailIngredients,
   GetIngredient,
   GetIngredients,
+  GetNormalIngredients,
   UpdateIngredient,
 } from "./route/Ingredients.js"
 import {
@@ -95,6 +97,12 @@ const sessionRoutes = ({ app }) => {
   //*********************** Ingredients **********************
   app.get("/allIngredient", async (req, res) => {
     await GetIngredients(req, res)
+  })
+  app.get("/NormalIngredients", async (req, res) => {
+    await GetNormalIngredients(req, res)
+  })
+  app.get("/CocktailIngredients", async (req, res) => {
+    await GetCocktailIngredients(req, res)
   })
   app.get("/ingredient/:idIngredient", auth, async (req, res) => {
     await GetIngredient(req, res)
