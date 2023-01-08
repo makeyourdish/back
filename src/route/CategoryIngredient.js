@@ -57,11 +57,15 @@ export const DeleteCategoryIngredient = async (req, res) => {
   const { idCategoryIngredient } = req.params
 
   try {
+    const ingredients = await prisma.ingredients.deleteMany({
+      where: {categoryIngredientsId: Number(idCategoryIngredient)}
+    })
+
     const categoryIngredients = await prisma.categoryIngredients.delete({
       where: { id: Number(idCategoryIngredient) },
     })
 
-    res.status(200).send({ categoryIngredients: categoryIngredients })
+    res.status(200).send({ categoryIngredients: categoryIngredients, ingredients:ingredients })
   } catch (error) {
     res.status(400).send("Problème survenu : " + error)
   }
