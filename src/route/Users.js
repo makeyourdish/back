@@ -23,12 +23,6 @@ export const userSignIn = async (req, res) => {
       return
     }
 
-    if (!user) {
-      res.status(403).send("L'email ou le mot de passe est invalide")
-
-      return
-    }
-
     // eslint-disable-next-line no-unused-vars
     const [passwordHash, passwordSalt] = hashPassword(
       password,
@@ -141,7 +135,7 @@ export const updateUser = async (req, res) => {
   try {
     let user
 
-    if (password.length) {
+    if (password?.length) {
       const [passwordHash, passwordSalt] = hashPassword(password)
 
       user = await prisma.users.update({
@@ -151,7 +145,7 @@ export const updateUser = async (req, res) => {
           email: email,
           passwordHash: passwordHash,
           passwordSalt: passwordSalt,
-          isAdmin: isAdmin || false,
+          isAdmin: isAdmin,
         },
       })
 
@@ -168,6 +162,59 @@ export const updateUser = async (req, res) => {
         isAdmin: isAdmin,
       },
     })
+
+    res.send(user)
+  } catch (error) {
+    res.status(400).send("Problème survenu : " + error)
+  }
+}
+
+export const updateUserPassword = async (req, res) => {
+  const {
+    body: { email, oldPassword, password },
+    params: { idUser },
+  } = req
+
+  try {
+    let user = await prisma.users.findFirst({
+      where: {
+        email: email,
+      },
+    })
+
+    if (!user) {
+      res.status(403).send("L'email ou le mot de passe est invalide")
+
+      return
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const [oldPasswordHash, passwordSalt] = hashPassword(
+      oldPassword,
+      user.passwordSalt
+    )
+
+    if (oldPasswordHash !== user.passwordHash) {
+      res.status(403).send("L'email ou le mot de passe est invalide")
+
+      return
+    }
+
+    if (password?.length) {
+      const [passwordHash, passwordSalt] = hashPassword(password)
+
+      user = await prisma.users.update({
+        where: { id: Number(idUser) },
+        data: {
+          passwordHash: passwordHash,
+          passwordSalt: passwordSalt,
+        },
+      })
+
+      res.send(user)
+
+      return
+    }
 
     res.send(user)
   } catch (error) {

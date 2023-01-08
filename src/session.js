@@ -29,6 +29,7 @@ import {
   UpdateRecipeType,
 } from "./route/RecipeType.js"
 import {
+  updateUserPassword,
   userSession,
   userSignIn,
   userCreate,
@@ -65,6 +66,9 @@ const sessionRoutes = ({ app }) => {
   })
   app.get("/session", async (req, res) => {
     await userSession(req, res)
+  })
+  app.put("/user/:idUser/updatePassword", authMaster, async (req, res) => {
+    await updateUserPassword(req, res)
   })
   //*********************** Recipes **********************
   app.get("/allRecipe", async (req, res) => {

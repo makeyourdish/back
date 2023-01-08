@@ -18,7 +18,7 @@ export const GetRecipes = async (req, res) => {
 export const GetNormalRecipes = async (req, res) => {
   try {
     const recipes = await prisma.recipes.findMany({
-      where:{isCocktail: false},
+      where: { isCocktail: false },
       include: { recipeType: true },
     })
 
@@ -31,7 +31,7 @@ export const GetNormalRecipes = async (req, res) => {
 export const GetCocktailRecipes = async (req, res) => {
   try {
     const recipes = await prisma.recipes.findMany({
-      where:{isCocktail: true},
+      where: { isCocktail: true },
       include: { recipeType: true },
     })
 
@@ -50,9 +50,9 @@ export const GetRecipe = async (req, res) => {
       include: { ingredients: { include: { ingredient: true } } },
     })
 
-    if(!recipe) {
+    if (!recipe) {
       res.status(404).send("La recette n'a pas été trouvée !")
-    }else {
+    } else {
       res.status(200).send(recipe)
     }
   } catch (error) {
@@ -90,7 +90,7 @@ export const CreateRecipes = async (req, res) => {
         priceRange: priceRange,
         difficulty: difficulty,
         published: published,
-        isCocktail:isCocktail,
+        isCocktail: isCocktail,
         recipeTypeId: recipeTypeId,
       },
     })
@@ -150,7 +150,7 @@ export const UpdateRecipes = async (req, res) => {
         priceRange: priceRange,
         difficulty: difficulty,
         published: published,
-        isCocktail:isCocktail,
+        isCocktail: isCocktail,
         recipeTypeId: recipeTypeId,
       },
     })
