@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 export const GetRecipes = async (req, res) => {
   try {
     const recipes = await prisma.recipes.findMany({
-      include: { recipeType: true },
+      include: { recipeType: true, ingredients: true },
     })
 
     res.status(200).send(recipes)

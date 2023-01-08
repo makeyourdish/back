@@ -51,6 +51,7 @@ model Ingredients {
   imageUrl              String?
   categoryIngredients   CategoryIngredients @relation(fields: [categoryIngredientsId], references: [id])
   categoryIngredientsId Int
+  isCocktail            Boolean             @default(false)
   recipes               Contain[]
 }
 
@@ -63,6 +64,7 @@ model RecipeType {
 model CategoryIngredients {
   id          Int           @id @default(autoincrement())
   name        String
+  isCocktail  Boolean       @default(false)
   ingredients Ingredients[]
 }
 
